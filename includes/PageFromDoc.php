@@ -1,5 +1,4 @@
 <?php
-
 use MediaWiki\Storage\PageUpdater;
 use MediaWiki\MediaWikiServices;
 
@@ -130,8 +129,11 @@ class PageFromDoc extends SpecialPage {
 					$state = 'article';
 				break;
 				case 'article':
+					if(substr($line,-1)=="?"){	//Check if it is a question/article
+						$state = 'question';
+						$i--;
+					}
 					$pages['articles'][$j] = $line;
-					$state = 'question';
 				break;
 				case 'question':
 					if (preg_match('/answer[^\w]*key/i', $line)) {
